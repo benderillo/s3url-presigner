@@ -10,19 +10,20 @@ import (
 	"github.com/aws/aws-sdk-go/service/s3"
 )
 
+// A Storage provides the ability to pre-sign S3 urls
 type Storage struct {
 	s3svc *s3.S3
 }
 
 // NewStorage creates a new instance of Storage which can provide presigned URLs for AWS S3 buckets
-func NewStorage(awsSession *session.Session) Storage {
+func NewStorage(awsSession *session.Session) *Storage {
 
-	return Storage{
+	return &Storage{
 		s3svc: s3.New(awsSession),
 	}
 }
 
-func (storage Storage) parseS3URI(uri string) (*string, *string, error) {
+func (s Storage) parseS3URI(uri string) (*string, *string, error) {
 	parsed, err := url.Parse(uri)
 	if err != nil {
 		return nil, nil, errors.New("Unable to parse S3 URL: " + uri)
@@ -33,20 +34,22 @@ func (storage Storage) parseS3URI(uri string) (*string, *string, error) {
 	return &bucket, &key, nil
 }
 
-func (storage Storage) GetPresignedURL(method string, uri string, expiry time.Duration) (*string, time.Time, error) {
-	bucket, key, err := storage.parseS3URI(uri)
+// GetPresignedURL pre-signs given S3 url for the access via given HTTP method.
+// The generated pre-signed URL will expire after provided time duration
+func (s Storage) GetPresignedURL(method string, uri string, expiry time.Duration) (*string, time.Time, error) {
+	bucket, key, err := s.parseS3URI(uri)
 	if err != nil {
 		return nil, time.Now().UTC(), err
 	}
 
 	var req *request.Request
 	if method == "put" {
-		req, _ = storage.s3svc.PutObjectRequest(&s3.PutObjectInput{
+		req, _ = s.s3svc.PutObjectRequest(&s3.PutObjectInput{
 			Bucket: bucket,
 			Key:    key,
 		})
 	} else if method == "get" {
-		req, _ = storage.s3svc.GetObjectRequest(&s3.GetObjectInput{
+		req, _ = s.s3svc.GetObjectRequest(&s3.GetObjectInput{
 			Bucket: bucket,
 			Key:    key,
 		})
