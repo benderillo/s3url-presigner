@@ -7,7 +7,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/benderillo/s3url-presigner/svc"
+	"github.com/benderillo/s3url-presigner/storage"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/credentials"
@@ -52,7 +52,7 @@ func main() {
 		log.Fatal().Err(err).Msg("Unable to create AWS session")
 	}
 
-	s3 := svc.NewStorage(awsSession)
+	s3 := storage.NewStorage(awsSession)
 
 	urlStr := "s3://" + opts.Bucket + opts.Path
 	expiry := time.Second * time.Duration(opts.Expiry)
