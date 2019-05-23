@@ -7,7 +7,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/benderillo/s3url-presigner/storage"
+	"github.com/benderillo/s3url-presigner/pkg/storage"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/credentials"
