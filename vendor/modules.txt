@@ -39,7 +39,7 @@ github.com/jessevdk/go-flags
 # github.com/jmespath/go-jmespath v0.0.0-20180206201540-c2b33e8439af
 github.com/jmespath/go-jmespath
 # github.com/rs/zerolog v1.14.3
-github.com/rs/zerolog
 github.com/rs/zerolog/log
+github.com/rs/zerolog
 github.com/rs/zerolog/internal/cbor
 github.com/rs/zerolog/internal/json

@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"io"
 	"os"
 	"time"
 
@@ -13,12 +12,10 @@ import (
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"
 	flags "github.com/jessevdk/go-flags"
-	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 )
 
 var opts struct {
-	Verbose         bool   `short:"v" long:"verbose" description:"Print detailed information"`
 	AwsRegion       string `short:"r" long:"aws-region" description:"AWS region" env:"AWS_REGION" required:"true"`
 	AwsAccessID     string `short:"i" long:"aws-access-id" description:"AWS access ID" env:"AWS_ACCESS_KEY_ID" required:"true"`
 	AwsSecretKey    string `short:"s" long:"aws-secret-key" description:"AWS secret key" env:"AWS_SECRET_ACCESS_KEY" required:"true"`
@@ -35,8 +32,6 @@ func main() {
 	if _, err := parser.Parse(); err != nil {
 		os.Exit(1)
 	}
-
-	setVerboseLevel(opts.Verbose)
 
 	// Create AWS session
 	awsSession, err := session.NewSession(&aws.Config{
@@ -70,17 +65,4 @@ func main() {
 
 	fmt.Print(string(output))
 	os.Exit(0)
-}
-
-func setVerboseLevel(verbose bool) {
-	var logWriter io.Writer
-	if verbose {
-		// Do not print logs as JSON
-		logWriter = zerolog.ConsoleWriter{Out: os.Stdout}
-		zerolog.SetGlobalLevel(zerolog.DebugLevel)
-	} else {
-		logWriter = os.Stdout
-		zerolog.SetGlobalLevel(zerolog.InfoLevel)
-	}
-	log.Logger = zerolog.New(logWriter).With().Timestamp().Logger()
 }
