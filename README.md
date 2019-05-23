@@ -1,5 +1,7 @@
 # s3url-presigner
 [![Go Report Card](https://goreportcard.com/badge/github.com/benderillo/s3url-presigner)](https://goreportcard.com/report/github.com/benderillo/s3url-presigner)
+[![GolangCI](https://golangci.com/badges/github.com/benderillo/s3url-presigner.svg)](https://golangci.com/r/github.com/benderillo/s3url-presigner)
+[![Release](https://img.shields.io/github/release/benderillo/s3url-presigner.svg)](https://github.com/benderillo/s3url-presigner/releases/latest)
 
 S3 URL presigner generates pre-signed S3 urls for PUT and GET requests
 
