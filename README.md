@@ -15,7 +15,6 @@ Usage:
   aws-s3-presign-url [OPTIONS]
 
 Application Options:
-  -v, --verbose            Print detailed information
   -r, --aws-region=        AWS region [$AWS_REGION]
   -i, --aws-access-id=     AWS access ID [$AWS_ACCESS_KEY_ID]
   -s, --aws-secret-key=    AWS secret key [$AWS_SECRET_ACCESS_KEY]
