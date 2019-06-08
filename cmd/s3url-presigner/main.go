@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"os"
 	"time"
@@ -52,17 +51,12 @@ func main() {
 	urlStr := "s3://" + opts.Bucket + opts.Path
 	expiry := time.Second * time.Duration(opts.Expiry)
 
-	s3Url, expTime, err := s3.GetPresignedURL(opts.Method, urlStr, expiry)
+	s3Url, _, err := s3.GetPresignedURL(opts.Method, urlStr, expiry)
 
 	if err != nil {
 		log.Fatal().Err(err).Msg("Unable to generate presigned url")
 	}
 
-	output, _ := json.MarshalIndent(struct {
-		URL    string
-		Expiry time.Time
-	}{URL: *s3Url, Expiry: expTime}, "", "\t")
-
-	fmt.Print(string(output))
+	fmt.Println(*s3Url)
 	os.Exit(0)
 }
