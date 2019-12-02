@@ -13,38 +13,27 @@ S3 URL presigner generates pre-signed S3 urls for PUT and GET requests
 
 ```
 Usage:
-  aws-s3-presign-url [OPTIONS]
+  main [OPTIONS]
 
 Application Options:
-  -r, --aws-region=        AWS region [$AWS_REGION]
-  -i, --aws-access-id=     AWS access ID [$AWS_ACCESS_KEY_ID]
-  -s, --aws-secret-key=    AWS secret key [$AWS_SECRET_ACCESS_KEY]
-  -t, --aws-session-token= AWS session token [$AWS_SESSION_TOKEN]
-  -b, --bucket=            S3 bucket [$S3_BUCKET]
-  -p, --path=              S3 path [$S3_PATH]
-  -m, --method=[get|put]   HTTP method that needs to be presigned (default: get)
-  -e, --expiry=            Expiration time for the url in seconds (default: 7200)
+  -b, --bucket=          S3 bucket [env: S3_BUCKET]
+  -p, --path=            S3 path [env: S3_PATH]
+  -m, --method=[get|put] HTTP method that needs to be presigned (default: get)
+  -e, --expiry=          Expiration time for the url in seconds (default: 7200)
 
 Help Options:
-  -h, --help               Show this help message
-  ```
+  -h, --help             Show this help message
+```
 
 ### Example input
 
 ```
-export AWS_REGION=us-east-1
-export AWS_ACCESS_KEY_ID=myaccesskeyid
-export AWS_SECRET_ACCESS_KEY=mysecretaccesskey
-
 s3url-presigner --bucket my-example-bucket --path /test/path/file.txt --method put --expiry 3600
 ```
 
 ### Example output
 ```
-{
-	"URL": "https://my-example-bucket.s3.us-east-1.amazonaws.com/test/path/file.txt?X-Amz-Algorithm=AWS4-HMAC-SHA256\u0026X-Amz-Credential=XXXXXXXXXXXXX%2F20190523%2Fus-east-1%2Fs3%2Faws4_request\u0026X-Amz-Date=20190523T032122Z\u0026X-Amz-Expires=3600\u0026X-Amz-Security-Token=FjopijpoirjpeoirgjsofdighsdfoighdiohgXXXXXXXXXXXXxxxxxxxxxxx\u0026X-Amz-SignedHeaders=host\u0026X-Amz-Signature=iddqdiddqdgodshowmethemoneygodiddqdiddqd",
-	"Expiry": "2019-05-23T04:21:22.919215Z"
-}
+https://my-example-bucket.s3.us-east-1.amazonaws.com/test/path/file.txt?X-Amz-Algorithm=AWS4-HMAC-SHA256\u0026X-Amz-Credential=XXXXXXXXXXXXX%2F20190523%2Fus-east-1%2Fs3%2Faws4_request\u0026X-Amz-Date=20190523T032122Z\u0026X-Amz-Expires=3600\u0026X-Amz-Security-Token=FjopijpoirjpeoirgjsofdighsdfoighdiohgXXXXXXXXXXXXxxxxxxxxxxx\u0026X-Amz-SignedHeaders=host\u0026X-Amz-Signature=iddqdiddqdgodshowmethemoneygodiddqdiddqd
 ```
 
 ### How to include it in your project
