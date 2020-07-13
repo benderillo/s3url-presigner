@@ -13,8 +13,7 @@ import (
 )
 
 var opts struct {
-	Bucket string `short:"b" long:"bucket" description:"S3 bucket" env:"S3_BUCKET" required:"true"`
-	Path   string `short:"p" long:"path" description:"S3 path" env:"S3_PATH" required:"true"`
+	Url    string `short:"u" long:"url" description:"S3 URL (s3://bucket/path)" env:"S3_URL" required:"true"`
 	Method string `short:"m" long:"method" choice:"get" choice:"put" description:"HTTP method that needs to be presigned" default:"get"`
 	Expiry int64  `short:"e" long:"expiry" description:"Expiration time for the url in seconds" default:"7200"`
 }
@@ -37,10 +36,9 @@ func main() {
 
 	s3 := storage.NewStorage(awsSession)
 
-	urlStr := "s3://" + opts.Bucket + opts.Path
 	expiry := time.Second * time.Duration(opts.Expiry)
 
-	s3Url, _, err := s3.GetPresignedURL(opts.Method, urlStr, expiry)
+	s3Url, _, err := s3.GetPresignedURL(opts.Method, opts.Url, expiry)
 
 	if err != nil {
 		log.Fatal().Err(err).Msg("Unable to generate presigned url")
