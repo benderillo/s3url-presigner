@@ -22,6 +22,11 @@ func main() {
 	parser := flags.NewParser(&opts, flags.Default)
 
 	if _, err := parser.Parse(); err != nil {
+		if e, ok := err.(*flags.Error); ok {
+			if e.Type != flags.ErrHelp {
+				os.Exit(0)
+			}
+		}
 		os.Exit(1)
 	}
 
