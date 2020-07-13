@@ -23,7 +23,7 @@ func main() {
 
 	if _, err := parser.Parse(); err != nil {
 		if e, ok := err.(*flags.Error); ok {
-			if e.Type != flags.ErrHelp {
+			if e.Type == flags.ErrHelp {
 				os.Exit(0)
 			}
 		}
