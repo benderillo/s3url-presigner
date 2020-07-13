@@ -16,8 +16,7 @@ Usage:
   main [OPTIONS]
 
 Application Options:
-  -b, --bucket=          S3 bucket [env: S3_BUCKET]
-  -p, --path=            S3 path [env: S3_PATH]
+  -u, --url=             S3 URL (s3://bucket/path) [$S3_URL]
   -m, --method=[get|put] HTTP method that needs to be presigned (default: get)
   -e, --expiry=          Expiration time for the url in seconds (default: 7200)
 
@@ -28,7 +27,7 @@ Help Options:
 ### Example input
 
 ```
-s3url-presigner --bucket my-example-bucket --path /test/path/file.txt --method put --expiry 3600
+s3url-presigner --url s3://my-example-bucket/test/path/file.txt --method put --expiry 3600
 ```
 
 ### Example output
